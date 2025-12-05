@@ -8,14 +8,19 @@ import java.util.Scanner;
  * Biblioteca2025
  *
  * @author 1dawd09
- * @version 1.0
+ * @version 1.1
  */
 public class Biblioteca2025 {
 
+    @SuppressWarnings("FieldMayBeFinal")
     private static Scanner sc = new Scanner(System.in);
+    @SuppressWarnings({"FieldMayBeFinal", "rawtypes", "unchecked"})
     private static ArrayList<Libro> libros = new ArrayList();
+    @SuppressWarnings({"FieldMayBeFinal", "rawtypes", "unchecked"})
     private static ArrayList<Usuario> usuarios = new ArrayList();
+    @SuppressWarnings({"FieldMayBeFinal", "rawtypes", "unchecked"})
     private static ArrayList<Prestamo> prestamos = new ArrayList();
+    @SuppressWarnings({"FieldMayBeFinal"})
     private static LocalDate hoy = LocalDate.now();
 
     public static void main(String[] args) {
@@ -151,7 +156,7 @@ public class Biblioteca2025 {
                     listarLibros();
                 }
                 case 3 -> {
-                    modificarLibro();
+                    menuModificarLibro();
                 }
                 case 4 -> {
                     eliminarLibro();
@@ -184,7 +189,7 @@ public class Biblioteca2025 {
                     listarUsuarios();
                 }
                 case 3 -> {
-                    modificarUsuario();
+                    menuModificarUsuario();
                 }
                 case 4 -> {
                     eliminarUsuario();
@@ -223,6 +228,147 @@ public class Biblioteca2025 {
         do {
             System.out.println("\n\tMENU DE LISTADOS");
             System.out.println("\t| 0 - SALIR");
+            System.out.println("\t| 1 - LISTADO DE LIBROS");
+            System.out.println("\t| 2 - LISTADO DE USUARIOS");
+            System.out.println("\t| 3 - LISTADO DE PRESTAMOS");
+
+            System.out.print("Teclea el numero: ");
+
+            opcion = sc.nextInt();
+            System.out.println();
+
+            switch (opcion) {
+                // MENU DE OPCIONES
+                case 1 -> {
+                    listarLibros();
+                }
+                case 2 -> {
+                    listarUsuarios();
+                }
+                case 3 -> {
+                    listarPrestamos();
+                }
+            }
+        } while (opcion != 0);
+    }
+
+    //#region MENUS MODIFICAR
+    public static void menuModificarLibro() {
+        System.out.print("Escribe el ISBN del libro a modificar: ");
+        int libroPos = buscarLibro(sc.next());
+        if (libroPos == -1) {
+            System.out.println("El libro no existe.");
+            return;
+        }
+        Libro l = libros.get(libroPos);
+        System.out.println("Titulo:\t" + l.getTitulo());
+        System.out.println("Autor:\t" + l.getAutor());
+        System.out.println("Genero:\t" + l.getGenero());
+        System.out.println("Ejemplares:\t" + l.getEjemplares());
+        int opcion;
+        do {
+            System.out.println("\n\tMENU DE MODIFICAR LIBROS");
+            System.out.println("\t| 0 - SALIR");
+            System.out.println("\t| 1 - ISBN");
+            System.out.println("\t| 2 - TITULO");
+            System.out.println("\t| 3 - AUTOR");
+            System.out.println("\t| 4 - GENERO");
+            System.out.println("\t| 5 - EJEMPLARES");
+
+            System.out.print("Teclea el numero: ");
+
+            opcion = sc.nextInt();
+            System.out.println();
+
+            switch (opcion) {
+                // MENU DE OPCIONES
+                case 1 -> {
+                    System.out.println("Se va a modificar el ISBN: " + l.getIsbn());
+                    System.out.print("Escribe el nuevo ISBN: ");
+                    l.setIsbn(sc.next());
+                }
+                case 2 -> {
+                    System.out.println("Se va a modificar el titulo: " + l.getTitulo());
+                    System.out.print("Escribe el nuevo titulo: ");
+                    sc.nextLine();
+                    l.setTitulo(sc.nextLine());
+                }
+                case 3 -> {
+                    System.out.println("Se va a modificar el autor: " + l.getTitulo());
+                    System.out.print("Escribe el nuevo autor: ");
+                    l.setAutor(sc.next());
+                }
+                case 4 -> {
+                    System.out.println("Se va a modificar el genero: " + l.getGenero());
+                    System.out.print("Escribe el nuevo autor: ");
+                    l.setGenero(sc.next());
+                }
+                case 5 -> {
+                    System.out.println("Se va a modificar la cantidad de ejemplares: " + l.getEjemplares());
+                    System.out.print("Escribe la cantidad de ejemplares: ");
+                    sc.nextLine();
+                    l.setEjemplares(sc.nextInt());
+                }
+            }
+        } while (opcion != 0);
+    }
+
+    public static void menuModificarUsuario() {
+        System.out.print("Escribe el DNI del usuario a modificar: ");
+        int usuarioPos = buscarUsuario(sc.next());
+        if (usuarioPos == -1) {
+            System.out.println("El usuario no existe.");
+            return;
+        }
+        Usuario u = usuarios.get(usuarioPos);
+        System.out.println("Nombre:\t" + u.getNombre());
+        System.out.println("Email:\t" + u.getEmail());
+        System.out.println("Telefono:\t" + u.getTelefono());
+        int opcion;
+        do {
+            System.out.println("\n\tMENU DE MODIFICAR USUARIOS");
+            System.out.println("\t| 0 - SALIR");
+            System.out.println("\t| 1 - DNI");
+            System.out.println("\t| 2 - NOMBRE");
+            System.out.println("\t| 3 - EMAIL");
+            System.out.println("\t| 4 - TELEFONO");
+
+            System.out.print("Teclea el numero: ");
+
+            opcion = sc.nextInt();
+            System.out.println();
+
+            switch (opcion) {
+                // MENU DE OPCIONES
+                case 1 -> {
+                    System.out.println("Se va a modificar el DNI: " + u.getDni());
+                    System.out.print("Escribe el nuevo DNI: ");
+                    u.setDni(sc.next());
+                }
+                case 2 -> {
+                    System.out.println("Se va a modificar el nombre: " + u.getNombre());
+                    System.out.print("Escribe el nuevo nombre: ");
+                    u.setNombre(sc.next());
+                }
+                case 3 -> {
+                    System.out.println("Se va a modificar el email: " + u.getEmail());
+                    System.out.print("Escribe el nuevo email: ");
+                    u.setEmail(sc.next());
+                }
+                case 4 -> {
+                    System.out.println("Se va a modificar el telefono: " + u.getTelefono());
+                    System.out.print("Escribe el nuevo telefono: ");
+                    u.setTelefono(sc.next());
+                }
+            }
+        } while (opcion != 0);
+    }
+
+    public static void menuModificarPrestamos() {
+        int opcion;
+        do {
+            System.out.println("\n\tMENU DE LISTADOS");
+            System.out.println("\t| 0 - SALIR");
             System.out.println("\t| 1 - LISTADO DE USUARIOS");
             System.out.println("\t| 2 - LISTADO DE LIBROS");
             System.out.println("\t| 3 - LISTADO DE PRESTAMOS");
@@ -246,9 +392,9 @@ public class Biblioteca2025 {
             }
         } while (opcion != 0);
     }
-
     //#endregion
 
+    //#endregion
     //#region CREAR
     public static void crearLibro() {
         System.out.println("Vamos a registrar un libro nuevo");
@@ -287,20 +433,26 @@ public class Biblioteca2025 {
         if (libroPos == -1) {
             System.out.println("Ese libro no existe en la biblioteca");
         } else {
+            Libro libro = libros.get(libroPos);
+            if (libro.getEjemplares() <= 0) {
+                System.out.println("No quedan ejemplares disponibles de este libro.");
+                return;
+            }
             System.out.print("Escribe el DNI del usuario: ");
             String usuarioPrest = sc.next();
             int usuarioPos = buscarUsuario(usuarioPrest);
             if (usuarioPos == -1) {
                 System.out.println("Ese usuario no esta registrado");
             } else {
-                buscarUsuario(usuarioPrest);
                 LocalDate fechaPrest = hoy;
                 LocalDate fechaDev = hoy.plusDays(7);
-                prestamos.add(new Prestamo(libros.get(libroPos), usuarios.get(usuarioPos), fechaPrest, fechaDev));
+                prestamos.add(new Prestamo(libro, usuarios.get(usuarioPos), fechaPrest, fechaDev));
+                libro.setEjemplares(libro.getEjemplares() - 1);
+                System.out.println("Prestamo realizado correctamente. Quedan " + libro.getEjemplares() + " ejemplares.");
             }
         }
     }
-//#endregion
+    //#endregion
 
     //#region LISTAR
     public static void listar() {
@@ -344,23 +496,40 @@ public class Biblioteca2025 {
     }
     //#endregion
 
-    //#region MODIFICAR
-    public static void modificarLibro() {
-
-    }
-
-    public static void modificarUsuario() {
-
-    }
-    //#endregion
-
     //#region ELIMINAR
     public static void eliminarLibro() {
-
+        System.out.print("Escribe el ISBN del libro a eliminar: ");
+        int libroPos = buscarLibro(sc.next());
+        if (libroPos == -1) {
+            System.out.println("El libro no existe.");
+            return;
+        }
+        Libro l = libros.get(libroPos);
+        System.out.println("Titulo:\t" + l.getTitulo());
+        System.out.println("Autor:\t" + l.getAutor());
+        System.out.println("Genero:\t" + l.getGenero());
+        System.out.println("Ejemplares:\t" + l.getEjemplares());
+        System.out.println("¿Esta informacion es correcta y deseas eliminar el libro? (Si/No)");
+        if (sc.next().equalsIgnoreCase("Si")) {
+            libros.remove(libroPos);
+        }
     }
 
     public static void eliminarUsuario() {
-
+        System.out.print("Escribe el DNI del usuario a eliminar: ");
+        int usuarioPos = buscarUsuario(sc.next());
+        if (usuarioPos == -1) {
+            System.out.println("El usuario no existe.");
+            return;
+        }
+        Usuario u = usuarios.get(usuarioPos);
+        System.out.println("Nombre:\t" + u.getNombre());
+        System.out.println("Email:\t" + u.getEmail());
+        System.out.println("Telefono:\t" + u.getTelefono());
+        System.out.println("¿Esta informacion es correcta y deseas eliminar el usuario? (Si/No)");
+        if (sc.next().equalsIgnoreCase("Si")) {
+            usuarios.remove(usuarioPos);
+        }
     }
 
     public static void eliminarPrestamo() {
@@ -368,3 +537,7 @@ public class Biblioteca2025 {
     }
     //#endregion
 }
+
+// <editor-fold defaultstate="collapse" desc="MENU">
+
+// </editor-fold>
