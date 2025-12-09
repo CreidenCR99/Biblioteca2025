@@ -1,6 +1,7 @@
 # Biblioteca2025
 
 Proyecto de gestión de una biblioteca para clase.
+Adrián Cuervo Rodríguez, 1 DAW.
 
 ## Descripción
 
