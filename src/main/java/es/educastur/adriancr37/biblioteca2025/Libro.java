@@ -58,6 +58,6 @@ public class Libro {
 
     @Override
     public String toString() {
-        return "Libro [isbn=" + isbn + ", titulo=" + titulo + ", autor=" + autor + ", genero=" + genero + ", ejemplares=" + ejemplares + "]";
+        return "[isbn= " + isbn + "\ttitulo= " + titulo + "\tautor= " + autor + "\tgenero= " + genero + "\tejemplares= " + ejemplares + "]";
     }
 }

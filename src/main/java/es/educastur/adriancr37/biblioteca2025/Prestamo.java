@@ -50,6 +50,6 @@ public class Prestamo {
 
     @Override
     public String toString() {
-        return "Prestamo [libroPrest=" + libroPrest + ", usuarioPrest=" + usuarioPrest + ", fechaPrest=" + fechaPrest + ", fechaDev=" + fechaDev + "]";
+        return "[libroPrest= " + libroPrest + "\tusuarioPrest= " + usuarioPrest + "\tfechaPrest= " + fechaPrest + "\tfechaDev= " + fechaDev + "]";
     }
 }
