@@ -12,3 +12,4 @@ Biblioteca2025 es una aplicación diseñada para facilitar la administración y 
 - Gestión de usuarios y préstamos
 - Control de devoluciones y sanciones
 - Interfaz intuitiva y fácil de usar
+- Estadísticas sobre los libros y usuarios
