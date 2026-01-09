@@ -1,15 +1,12 @@
 # Biblioteca2025
 
-Proyecto de gestión de una biblioteca para clase.
-
 ## Descripción
 
-Biblioteca2025 es una aplicación diseñada para facilitar la administración y gestión de libros en una biblioteca escolar. Permite registrar préstamos, devoluciones y gestionar el catálogo de libros de manera eficiente.
+Biblioteca2025 es una aplicación de prueba para facilitar la gestión de libros en una biblioteca virtual.
 
 ## Características
 
 - Registro y búsqueda
-- Gestión de usuarios y préstamos
-- Control de devoluciones y sanciones
+- Gestión de usuarios, libros y préstamos y devoluciones
 - Interfaz intuitiva y fácil de usar
 - Estadísticas sobre los libros y usuarios
