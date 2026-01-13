@@ -144,6 +144,38 @@ public class Biblioteca2025 {
         return pos;
     }
 
+    /**
+     * Comprueba si un numero "s" es Int
+     * 
+     * @param s numero a teclear
+     * @return true si es Int, false si no lo es
+     */
+    public static boolean esInt(String s) {
+        int n;
+        try {
+            n = Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
+
+    /**
+     * Comprueba si un numero "s" es Double
+     * 
+     * @param s numero a teclear
+     * @return true si es Double, false si no lo es
+     */
+    public static boolean esDouble(String s) {
+        double n;
+        try {
+            n = Double.parseDouble(s);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
+
     //#endregion
     //#region MENUS
     public static void menuPrincipal() {
@@ -527,7 +559,7 @@ public class Biblioteca2025 {
         System.out.print("Escribe la cantidad de ejemplares: ");
         int ejemplares = sc.nextInt();
         libros.add(new Libro(isbn, titulo, autor, genero, ejemplares));
-        
+
         System.out.println("ISBN:\t" + isbn);
         System.out.println("Titulo:\t" + titulo);
         System.out.println("Autor:\t" + autor);
@@ -546,7 +578,7 @@ public class Biblioteca2025 {
         System.out.print("Escribe el telefono: ");
         String telefono = sc.next();
         usuarios.add(new Usuario(dni, nombre, email, telefono));
-        
+
         System.out.println("DNI:\t" + dni);
         System.out.println("Nombre:\t" + nombre);
         System.out.println("Email:\t" + email);
@@ -562,7 +594,7 @@ public class Biblioteca2025 {
             System.out.println("Ese usuario no esta registrado");
         } else {
             Usuario usuario = usuarios.get(usuarioPos);
-            
+
             System.out.println("Nombre:\t" + usuario.getNombre());
             System.out.println("Email:\t" + usuario.getEmail());
             System.out.println("Telefono:\t" + usuario.getTelefono());
@@ -946,8 +978,8 @@ public class Biblioteca2025 {
             throw new LibroNoExiste("No existe en esta biblioteca la referencia: " + libros.get(libroPos).getIsbn());
         } else if (libros.get(libroPos).getEjemplares() == 0) {
             String cadena = "No hay unidades del libro " + libros.get(libroPos).getTitulo()
-            + "\nDisponibles actualmente: "
-            + "\nFechas de devolucion previstas: ";
+                    + "\nDisponibles actualmente: "
+                    + "\nFechas de devolucion previstas: ";
             for (Prestamo p : prestamos) {
                 if (p.getLibroPrest().getIsbn().equals(isbn)) {
                     cadena = cadena + "\n * " + p.getFechaDev();
