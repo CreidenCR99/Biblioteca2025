@@ -7,8 +7,8 @@ import java.util.Scanner;
 /**
  * Biblioteca2025
  *
- * @author 1dawd09 - Adrián Cuervo
- * @version 1.4
+ * @author Adrián Cuervo - CreidenCR99
+ * @version 15/01/26
  */
 public class Biblioteca2025 {
 
@@ -21,7 +21,8 @@ public class Biblioteca2025 {
 
     public static void main(String[] args) {
         cargaDatos();
-        menuPrincipal();
+        menuTiposListados();
+        //menuPrincipal();
     }
 
     //#region CARGAR DATOS
@@ -142,38 +143,6 @@ public class Biblioteca2025 {
             i++;
         }
         return pos;
-    }
-
-    /**
-     * Comprueba si un numero "s" es Int
-     * 
-     * @param s numero a teclear
-     * @return true si es Int, false si no lo es
-     */
-    public static boolean esInt(String s) {
-        int n;
-        try {
-            n = Integer.parseInt(s);
-            return true;
-        } catch (NumberFormatException ex) {
-            return false;
-        }
-    }
-
-    /**
-     * Comprueba si un numero "s" es Double
-     * 
-     * @param s numero a teclear
-     * @return true si es Double, false si no lo es
-     */
-    public static boolean esDouble(String s) {
-        double n;
-        try {
-            n = Double.parseDouble(s);
-            return true;
-        } catch (NumberFormatException ex) {
-            return false;
-        }
     }
 
     //#endregion
@@ -371,6 +340,7 @@ public class Biblioteca2025 {
             System.out.println("\t| 4 - LISTADO DE PRESTAMOS HISTORICOS");
             System.out.println("\t| 5 - PRESTAMOS POR USUARIO");
             System.out.println("\t| 6 - PRESTAMOS POR LIBRO");
+            System.out.println("\t| 7 - TIPOS DE LISTADOS");
 
             System.out.print("Teclea el numero: ");
 
@@ -396,6 +366,9 @@ public class Biblioteca2025 {
                 }
                 case 6 -> {
                     listarPrestamosPorLibro();
+                }
+                case 7 -> {
+                    menuTiposListados();
                 }
             }
         } while (opcion != 0);
@@ -425,6 +398,35 @@ public class Biblioteca2025 {
                 }
                 case 3 -> {
                     usuarioMasLector();
+                }
+            }
+        } while (opcion != 0);
+    }
+
+    public static void menuTiposListados() {
+        int opcion;
+        do {
+            System.out.println("\n\tMENU DE LISTADOS");
+            System.out.println("\t| 0 - SALIR");
+            System.out.println("\t| 1 - LISTADOS CON STREAMS");
+            System.out.println("\t| 2 - LISTADOS FILTRADOS");
+            System.out.println("\t| 3 - ");
+
+            System.out.print("Teclea el numero: ");
+
+            opcion = sc.nextInt();
+            System.out.println();
+
+            switch (opcion) {
+                // MENU DE OPCIONES
+                case 1 -> {
+                    listadosConStreams();
+                }
+                case 2 -> {
+                    listadosFiltrados();
+                }
+                case 3 -> {
+                    ;
                 }
             }
         } while (opcion != 0);
@@ -520,8 +522,22 @@ public class Biblioteca2025 {
                 // MENU DE OPCIONES
                 case 1 -> {
                     System.out.println("Se va a modificar el DNI: " + u.getDni());
-                    System.out.print("Escribe el nuevo DNI: ");
-                    u.setDni(sc.next());
+                    String dni;
+                    while (true) {
+                        try {
+                            System.out.print("Escribe el nuevo DNI: ");
+                            dni = sc.next();
+                            if (!MetodosAuxiliares.validarDNI(dni)) {
+                                throw new IllegalArgumentException("DNI no válido. El formato debe ser 8 números y una letra. Inténtalo de nuevo.");
+                            }
+                            if (buscarUsuario(dni) != -1) {
+                                throw new IllegalArgumentException("Ya existe un usuario con ese DNI. Por favor, introduce uno diferente.");
+                            }
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
                 }
                 case 2 -> {
                     System.out.println("Se va a modificar el nombre: " + u.getNombre());
@@ -569,8 +585,22 @@ public class Biblioteca2025 {
 
     public static void crearUsuario() {
         System.out.println("Vamos a registrar un usuario nuevo");
-        System.out.print("Escribe el DNI del usuario: ");
-        String dni = sc.next();
+        String dni;
+        while (true) {
+            try {
+                System.out.print("Escribe el DNI del usuario: ");
+                dni = sc.next();
+                if (!MetodosAuxiliares.validarDNI(dni)) {
+                    throw new IllegalArgumentException("DNI no válido. El formato debe ser 8 números y una letra. Inténtalo de nuevo.");
+                }
+                if (buscarUsuario(dni) != -1) {
+                    throw new IllegalArgumentException("Ya existe un usuario con ese DNI. Por favor, introduce uno diferente.");
+                }
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         System.out.print("Escribe el nombre: ");
         String nombre = sc.next();
         System.out.print("Escribe el email: ");
@@ -579,6 +609,7 @@ public class Biblioteca2025 {
         String telefono = sc.next();
         usuarios.add(new Usuario(dni, nombre, email, telefono));
 
+        System.out.println("\nUsuario registrado correctamente:");
         System.out.println("DNI:\t" + dni);
         System.out.println("Nombre:\t" + nombre);
         System.out.println("Email:\t" + email);
@@ -710,6 +741,54 @@ public class Biblioteca2025 {
         }
     }
 
+    //#region TIPOS DE LISTADOS
+    public static void listadosConStreams() {
+        System.out.println("\n\t- Libros listados con un stream\n");
+        libros.stream()
+                .forEach(l -> System.out.println(l));
+        System.out.println("\n\t- Usuarios listados con un stream\n");
+        usuarios.stream()
+                .forEach(u -> System.out.println(u));
+        System.out.println("\n\t- Prestamos listados con un stream\n");
+        prestamos.stream()
+                .forEach(p -> System.out.println(p));
+    }
+
+    public static void listadosFiltrados() {
+        System.out.println("\n\t- Libros filtrados por genero (Aventura) con un stream\n");
+        libros.stream()
+                .filter(l -> l.getGenero().equalsIgnoreCase("aventuras")
+                && l.getAutor().equalsIgnoreCase("jrr tolkien"))
+                .forEach(l -> System.out.println(l));
+        System.out.println("\n\t- Libros filtrados por genero (Aventura) o autor (JRR Tolkien) con un stream\n");
+        libros.stream()
+                .filter(l -> l.getGenero().equalsIgnoreCase("novela negra")
+                || l.getAutor().equalsIgnoreCase("jrr tolkien"))
+                .forEach(l -> System.out.println(l));
+        System.out.println("\n\t- Prestamos fuera de plazo con un stream\n");
+        prestamos.stream()
+                .filter(p -> p.getFechaDev().isBefore(hoy))
+                .forEach(p -> System.out.println(p));
+        System.out.println("\n\t- Prestamos activos y no activos del usuario (teclear) con un stream\n");
+        String nombre = sc.next();
+        prestamos.stream()
+                .filter(p -> p.getUsuarioPrest().getNombre().equalsIgnoreCase(nombre))
+                .forEach(p -> System.out.println(p));
+        prestamosHist.stream()
+                .filter(h -> h.getUsuarioPrest().getNombre().equalsIgnoreCase(nombre))
+                .forEach(h -> System.out.println(h));
+        System.out.println("\n\t- Prestamos fuera de plazo del usuario (teclear) con un stream\n");
+        prestamos.stream()
+                .filter(p -> p.getUsuarioPrest().getNombre().equalsIgnoreCase(nombre)
+                && p.getFechaDev().isBefore(hoy))
+                .forEach(p -> System.out.println(p));
+        System.out.println("\n\t- Prestamos activos de libros del genero aventuras con un stream\n");
+        prestamos.stream()
+                .filter(p -> p.getLibroPrest().getGenero().equalsIgnoreCase("aventura"))
+                .forEach(p -> System.out.println(p));
+    }
+    //#endregion
+    //#endregion
     //#region EXAMEN
     /**
      * Ejercicio 1
@@ -973,12 +1052,15 @@ public class Biblioteca2025 {
     }
 
     /**
-     * Devuelve la posición de un libro en la colección según su ISBN, comprobando su disponibilidad.
+     * Devuelve la posición de un libro en la colección según su ISBN,
+     * comprobando su disponibilidad.
      *
      * @param isbn El ISBN del libro a buscar.
      * @return La posición del libro en la colección si está disponible.
-     * @throws LibroNoExiste Si no existe ningún libro con el ISBN proporcionado.
-     * @throws LibroNoDisponible Si el libro existe pero no hay ejemplares disponibles actualmente.
+     * @throws LibroNoExiste Si no existe ningún libro con el ISBN
+     * proporcionado.
+     * @throws LibroNoDisponible Si el libro existe pero no hay ejemplares
+     * disponibles actualmente.
      */
     public static int stockLibro(String isbn) throws LibroNoExiste, LibroNoDisponible {
         int libroPos = buscarLibro(isbn);
