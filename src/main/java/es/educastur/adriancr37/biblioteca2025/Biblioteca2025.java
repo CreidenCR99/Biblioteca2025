@@ -972,6 +972,14 @@ public class Biblioteca2025 {
         }
     }
 
+    /**
+     * Devuelve la posición de un libro en la colección según su ISBN, comprobando su disponibilidad.
+     *
+     * @param isbn El ISBN del libro a buscar.
+     * @return La posición del libro en la colección si está disponible.
+     * @throws LibroNoExiste Si no existe ningún libro con el ISBN proporcionado.
+     * @throws LibroNoDisponible Si el libro existe pero no hay ejemplares disponibles actualmente.
+     */
     public static int stockLibro(String isbn) throws LibroNoExiste, LibroNoDisponible {
         int libroPos = buscarLibro(isbn);
         if (libroPos == -1) {
