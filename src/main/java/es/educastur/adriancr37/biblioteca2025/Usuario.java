@@ -48,6 +48,16 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "[dni= " + dni + "\tnombre= " + nombre + "\temail= " + email + "\ttelefono= " + telefono + "]";
+        return "DNI:\t" + dni
+        + "\n" + "Nombre:\t" + nombre
+        + "\n" + "Email:\t" + email
+        + "\n" + "Telefono:\t" + telefono;
+    }
+
+    public String toStringShort() {
+        return "DNI:\t" + dni
+        + " - " + "Nombre:\t" + nombre
+        + " - " + "Email:\t" + email
+        + " - " + "Telefono:\t" + telefono;
     }
 }

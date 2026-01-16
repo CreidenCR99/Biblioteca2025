@@ -58,6 +58,18 @@ public class Libro {
 
     @Override
     public String toString() {
-        return "[isbn= " + isbn + "\ttitulo= " + titulo + "\tautor= " + autor + "\tgenero= " + genero + "\tejemplares= " + ejemplares + "]";
+        return "ISBN:\t" + isbn
+        + "\n" + "Titulo:\t" + titulo
+        + "\n" + "Autor:\t" + autor
+        + "\n" + "Genero:\t" + genero
+        + "\n" + "Ejemplares:\t" + ejemplares;
+    }
+
+    public String toStringShort() {
+        return "ISBN:\t" + isbn
+        + " - " + "Titulo:\t" + titulo
+        + " - " + "Autor:\t" + autor
+        + " - " + "Genero:\t" + genero
+        + " - " + "Ejemplares:\t" + ejemplares;
     }
 }

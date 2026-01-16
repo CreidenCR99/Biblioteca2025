@@ -2,13 +2,14 @@ package es.educastur.adriancr37.biblioteca2025;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 
 /**
  * Biblioteca2025
  *
  * @author Adrián Cuervo - CreidenCR99
- * @version 15/01/26
+ * @version 16/01/26
  */
 public class Biblioteca2025 {
 
@@ -22,7 +23,7 @@ public class Biblioteca2025 {
     public static void main(String[] args) {
         cargaDatos();
         menuTiposListados();
-        //menuPrincipal();
+        menuPrincipal();
     }
 
     //#region CARGAR DATOS
@@ -406,11 +407,11 @@ public class Biblioteca2025 {
     public static void menuTiposListados() {
         int opcion;
         do {
-            System.out.println("\n\tMENU DE LISTADOS");
+            System.out.println("\n\tMENU DE LISTADOS CON STREAMS");
             System.out.println("\t| 0 - SALIR");
             System.out.println("\t| 1 - LISTADOS CON STREAMS");
-            System.out.println("\t| 2 - LISTADOS FILTRADOS");
-            System.out.println("\t| 3 - ");
+            System.out.println("\t| 2 - LISTADOS FILTRADOS CON STREAMS");
+            System.out.println("\t| 3 - ORDENAR CON STREAMS");
 
             System.out.print("Teclea el numero: ");
 
@@ -426,7 +427,7 @@ public class Biblioteca2025 {
                     listadosFiltrados();
                 }
                 case 3 -> {
-                    ;
+                    ordenarConStreams();
                 }
             }
         } while (opcion != 0);
@@ -441,10 +442,7 @@ public class Biblioteca2025 {
             return;
         }
         Libro l = libros.get(libroPos);
-        System.out.println("Titulo:\t" + l.getTitulo());
-        System.out.println("Autor:\t" + l.getAutor());
-        System.out.println("Genero:\t" + l.getGenero());
-        System.out.println("Ejemplares:\t" + l.getEjemplares());
+        System.out.println(l);
         int opcion;
         do {
             System.out.println("\n\tMENU DE MODIFICAR LIBROS");
@@ -501,9 +499,7 @@ public class Biblioteca2025 {
             return;
         }
         Usuario u = usuarios.get(usuarioPos);
-        System.out.println("Nombre:\t" + u.getNombre());
-        System.out.println("Email:\t" + u.getEmail());
-        System.out.println("Telefono:\t" + u.getTelefono());
+        System.out.println(u);
         int opcion;
         do {
             System.out.println("\n\tMENU DE MODIFICAR USUARIOS");
@@ -576,11 +572,7 @@ public class Biblioteca2025 {
         int ejemplares = sc.nextInt();
         libros.add(new Libro(isbn, titulo, autor, genero, ejemplares));
 
-        System.out.println("ISBN:\t" + isbn);
-        System.out.println("Titulo:\t" + titulo);
-        System.out.println("Autor:\t" + autor);
-        System.out.println("Genero:\t" + genero);
-        System.out.println("Ejemplares:\t" + ejemplares);
+        System.out.println(libros.get(libros.size() - 1));
     }
 
     public static void crearUsuario() {
@@ -610,10 +602,7 @@ public class Biblioteca2025 {
         usuarios.add(new Usuario(dni, nombre, email, telefono));
 
         System.out.println("\nUsuario registrado correctamente:");
-        System.out.println("DNI:\t" + dni);
-        System.out.println("Nombre:\t" + nombre);
-        System.out.println("Email:\t" + email);
-        System.out.println("Telefono:\t" + telefono);
+        System.out.println(usuarios.get(usuarios.size() - 1));
     }
 
     public static void crearPrestamo() {
@@ -626,20 +615,14 @@ public class Biblioteca2025 {
         } else {
             Usuario usuario = usuarios.get(usuarioPos);
 
-            System.out.println("Nombre:\t" + usuario.getNombre());
-            System.out.println("Email:\t" + usuario.getEmail());
-            System.out.println("Telefono:\t" + usuario.getTelefono());
+            System.out.println(usuario);
 
             System.out.println("Escribe el ISBN del libro: ");
             String libroPrest = sc.next();
             try {
                 int libroPos = stockLibro(libroPrest);
                 Libro libro = libros.get(libroPos);
-
-                System.out.println("Titulo:\t" + libro.getTitulo());
-                System.out.println("Autor:\t" + libro.getAutor());
-                System.out.println("Genero:\t" + libro.getGenero());
-                System.out.println("Ejemplares:\t" + libro.getEjemplares());
+                System.out.println(libro);
 
                 LocalDate fechaPrest = hoy;
                 LocalDate fechaDev = hoy.plusDays(15);
@@ -666,41 +649,28 @@ public class Biblioteca2025 {
 
     public static void listarLibros() {
         for (Libro l : libros) {
-            System.out.println("ISBN:\t\t" + l.getIsbn());
-            System.out.println("Titulo:\t\t" + l.getTitulo());
-            System.out.println("Autor:\t\t" + l.getAutor());
-            System.out.println("Genero:\t\t" + l.getGenero());
-            System.out.println("Ejemplares:\t" + l.getEjemplares());
+            System.out.println(l);
             System.out.println();
         }
     }
 
     public static void listarUsuarios() {
         for (Usuario u : usuarios) {
-            System.out.println("DNI:\t\t" + u.getDni());
-            System.out.println("Nombre:\t\t" + u.getNombre());
-            System.out.println("Email:\t\t" + u.getEmail());
-            System.out.println("Telefono:\t" + u.getTelefono());
+            System.out.println(u);
             System.out.println();
         }
     }
 
     public static void listarPrestamos() {
         for (Prestamo p : prestamos) {
-            System.out.println("Usuario:\t\t" + p.getUsuarioPrest().getDni() + " - " + p.getUsuarioPrest().getNombre() + " - " + p.getUsuarioPrest().getEmail() + " - " + p.getUsuarioPrest().getTelefono());
-            System.out.println("Libro:\t\t\t" + p.getLibroPrest().getIsbn() + " - " + p.getLibroPrest().getTitulo() + " - " + p.getLibroPrest().getAutor() + " - " + p.getLibroPrest().getGenero() + " - " + p.getLibroPrest().getEjemplares());
-            System.out.println("Fecha de prestamo:\t" + p.getFechaPrest());
-            System.out.println("Fecha de devolución:\t" + p.getFechaDev());
+            System.out.println(p);
             System.out.println();
         }
     }
 
     public static void listarPrestamosHistoricos() {
         for (Prestamo p : prestamosHist) {
-            System.out.println("Usuario:\t\t" + p.getUsuarioPrest().getDni() + " - " + p.getUsuarioPrest().getNombre() + " - " + p.getUsuarioPrest().getEmail() + " - " + p.getUsuarioPrest().getTelefono());
-            System.out.println("Libro:\t\t\t" + p.getLibroPrest().getIsbn() + " - " + p.getLibroPrest().getTitulo() + " - " + p.getLibroPrest().getAutor() + " - " + p.getLibroPrest().getGenero() + " - " + p.getLibroPrest().getEjemplares());
-            System.out.println("Fecha de prestamo:\t" + p.getFechaPrest());
-            System.out.println("Fecha de devolución:\t" + p.getFechaDev());
+            System.out.println(p);
             System.out.println();
         }
     }
@@ -717,25 +687,19 @@ public class Biblioteca2025 {
             return;
         }
         Usuario u = usuarios.get(usuarioPos);
-        System.out.println("Nombre:\t\t" + u.getNombre());
-        System.out.println("Email:\t\t" + u.getEmail());
-        System.out.println("Telefono:\t" + u.getTelefono());
+        System.out.println(u);
         System.out.println();
         System.out.println("\t --- LIBROS EN PRESTAMO ACTUALMENTE ---");
         for (Prestamo p : prestamos) {
             if (p.getUsuarioPrest().equals(u)) {
-                System.out.println("Libro:\t\t\t" + p.getLibroPrest().getIsbn() + " - " + p.getLibroPrest().getTitulo() + " - " + p.getLibroPrest().getAutor() + " - " + p.getLibroPrest().getGenero() + " - " + p.getLibroPrest().getEjemplares());
-                System.out.println("Fecha de prestamo:\t" + p.getFechaPrest());
-                System.out.println("Fecha de devolución:\t" + p.getFechaDev());
+                System.out.println(p);
                 System.out.println();
             }
         }
         System.out.println("\t --- LIBROS PRESTADOS HISTORICAMENTE ---");
         for (Prestamo p : prestamosHist) {
             if (p.getUsuarioPrest().equals(u)) {
-                System.out.println("Libro:\t" + p.getLibroPrest().getIsbn() + " - " + p.getLibroPrest().getTitulo() + " - " + p.getLibroPrest().getAutor() + " - " + p.getLibroPrest().getGenero() + " - " + p.getLibroPrest().getEjemplares());
-                System.out.println("Fecha de prestamo:\t" + p.getFechaPrest());
-                System.out.println("Fecha de devolución:\t" + p.getFechaDev());
+                System.out.println(p);
                 System.out.println();
             }
         }
@@ -743,7 +707,7 @@ public class Biblioteca2025 {
 
     //#region TIPOS DE LISTADOS
     public static void listadosConStreams() {
-        System.out.println("\n\t- Libros listados con un stream\n");
+        System.out.println("\t- Libros listados con un stream\n");
         libros.stream()
                 .forEach(l -> System.out.println(l));
         System.out.println("\n\t- Usuarios listados con un stream\n");
@@ -755,7 +719,7 @@ public class Biblioteca2025 {
     }
 
     public static void listadosFiltrados() {
-        System.out.println("\n\t- Libros filtrados por genero (Aventura) con un stream\n");
+        System.out.println("\t- Libros filtrados por genero (Aventura) con un stream\n");
         libros.stream()
                 .filter(l -> l.getGenero().equalsIgnoreCase("aventuras")
                 && l.getAutor().equalsIgnoreCase("jrr tolkien"))
@@ -787,6 +751,47 @@ public class Biblioteca2025 {
                 .filter(p -> p.getLibroPrest().getGenero().equalsIgnoreCase("aventura"))
                 .forEach(p -> System.out.println(p));
     }
+
+    public static void ordenarConStreams() {
+
+        System.out.println("\tListado de libros ordenado alfabeticamente por titulos\n");
+        libros.stream()
+        .sorted(Comparator.comparing(Libro::getTitulo))
+        .forEach(l -> System.out.println(l));
+
+        System.out.println("\n\tListado de libros ordenado alfabeticamente por autor\n");
+        libros.stream()
+        .sorted(Comparator.comparing(Libro::getAutor))
+        .forEach(l -> System.out.println(l));
+
+        System.out.println("\n\tListado de usuarios ordenado alfabeticamente\n");
+        usuarios.stream()
+        .sorted(Comparator.comparing(Usuario::getNombre))
+        .forEach(u -> System.out.println(u));
+
+        System.out.println("\n\tListado de prestamos activos ordenado por fecha de devolución\n");
+        prestamos.stream()
+        .sorted(Comparator.comparing(Prestamo::getFechaDev))
+        .forEach(p -> System.out.println(p));
+
+        System.out.println("\n\tListado de libros por numero de prestamos\n");
+        libros.stream()
+        .sorted(Comparator.comparing(l -> numPrestamosLibro(l.getIsbn())))
+        .forEach(l -> System.out.println(l.toStringShort()));
+    }
+
+    public static int numPrestamosLibro(String isbn) {
+        int count = 0;
+        for (Prestamo p : prestamos) {
+            if (p.getLibroPrest().getIsbn().equalsIgnoreCase(isbn))
+                count++;
+        }
+        for (Prestamo h : prestamosHist) {
+            if (h.getLibroPrest().getIsbn().equalsIgnoreCase(isbn))
+                count++;
+        }
+        return count;
+    }
     //#endregion
     //#endregion
     //#region EXAMEN
@@ -806,9 +811,7 @@ public class Biblioteca2025 {
         System.out.println("\t --- PRESTAMOS ACTUALES DEL LIBRO '" + l.getTitulo() + "' ---");
         for (Prestamo p : prestamos) {
             if (p.getLibroPrest().equals(l)) {
-                System.out.println("Usuario:\t\t" + p.getUsuarioPrest().getDni() + " - " + p.getUsuarioPrest().getNombre() + " - " + p.getUsuarioPrest().getEmail() + " - " + p.getUsuarioPrest().getTelefono());
-                System.out.println("Fecha de prestamo:\t" + p.getFechaPrest());
-                System.out.println("Fecha de devolución:\t" + p.getFechaDev());
+                System.out.println(p);
                 System.out.println();
                 pActuales++;
             }
@@ -838,7 +841,7 @@ public class Biblioteca2025 {
                 }
             }
             if (!prestado) {
-                System.out.println("Libro:\t" + l.getIsbn() + " - " + l.getTitulo() + " - " + l.getAutor() + " - " + l.getGenero());
+                System.out.println(l.toStringShort());
             }
         }
     }
@@ -851,7 +854,7 @@ public class Biblioteca2025 {
         for (Usuario u : usuarios) {
             for (Prestamo p : prestamos) {
                 if (u.equals(p.getUsuarioPrest())) {
-                    System.out.println("Usuario:\t" + u.getNombre() + " - " + u.getDni() + " - " + u.getEmail() + " - " + u.getTelefono());
+                    System.out.println(u.toStringShort());
                     System.out.println();
                     break;
                 }
@@ -867,7 +870,7 @@ public class Biblioteca2025 {
         for (Usuario u : usuarios) {
             for (Prestamo p : prestamos) {
                 if (p.getFechaDev().isBefore(hoy) && u.equals(p.getUsuarioPrest())) {
-                    System.out.println("Usuario:\t" + p.getUsuarioPrest().getDni() + " - " + p.getUsuarioPrest().getNombre() + " - " + p.getUsuarioPrest().getEmail() + " - " + p.getUsuarioPrest().getTelefono());
+                    System.out.println(p.getUsuarioPrest().toStringShort());
                     System.out.println();
                     break;
                 }
@@ -905,10 +908,7 @@ public class Biblioteca2025 {
             return;
         }
         Libro l = libros.get(libroPos);
-        System.out.println("Titulo:\t\t" + l.getTitulo());
-        System.out.println("Autor:\t\t" + l.getAutor());
-        System.out.println("Genero:\t\t" + l.getGenero());
-        System.out.println("Ejemplares:\t" + l.getEjemplares());
+        System.out.println(l);
         System.out.println("¿Esta informacion es correcta y deseas eliminar el libro? (Si/No)");
         if (sc.next().equalsIgnoreCase("Si")) {
             libros.remove(libroPos);
@@ -923,9 +923,7 @@ public class Biblioteca2025 {
             return;
         }
         Usuario u = usuarios.get(usuarioPos);
-        System.out.println("Nombre:\t" + u.getNombre());
-        System.out.println("Email:\t" + u.getEmail());
-        System.out.println("Telefono:\t" + u.getTelefono());
+        System.out.println(u);
         System.out.println("¿Esta informacion es correcta y deseas eliminar el usuario? (Si/No)");
         if (sc.next().equalsIgnoreCase("Si")) {
             usuarios.remove(usuarioPos);
@@ -955,10 +953,7 @@ public class Biblioteca2025 {
         }
         Libro l = libros.get(libroPos);
         System.out.println();
-        System.out.println("Titulo:\t\t" + l.getTitulo());
-        System.out.println("Autor:\t\t" + l.getAutor());
-        System.out.println("Genero:\t\t" + l.getGenero());
-        System.out.println("Ejemplares:\t" + l.getEjemplares());
+        System.out.println(l);
         System.out.println("¿Esta informacion es correcta y deseas realizar la devolucion? (Si/No)");
         if (sc.next().equalsIgnoreCase("Si")) {
             Prestamo p = prestamos.get(libroPos);
@@ -976,10 +971,7 @@ public class Biblioteca2025 {
         System.out.println("\t --- LIBROS FUERA DE PLAZO --- ");
         for (Prestamo p : prestamos) {
             if (p.getFechaDev().isBefore(hoy)) {
-                System.out.println("Usuario:\t\t" + p.getUsuarioPrest().getDni() + " - " + p.getUsuarioPrest().getNombre() + " - " + p.getUsuarioPrest().getEmail() + " - " + p.getUsuarioPrest().getTelefono());
-                System.out.println("Libro:\t\t\t" + p.getLibroPrest().getIsbn() + " - " + p.getLibroPrest().getTitulo() + " - " + p.getLibroPrest().getAutor() + " - " + p.getLibroPrest().getGenero() + " - " + p.getLibroPrest().getEjemplares());
-                System.out.println("Fecha de prestamo:\t" + p.getFechaPrest());
-                System.out.println("Fecha de devolución:\t" + p.getFechaDev());
+                System.out.println(p);
                 System.out.println("El libro esta retrasado por " + (p.getFechaDev().getDayOfYear() - hoy.getDayOfYear()) * -1 + " dias.");
                 System.out.println();
             }
@@ -987,10 +979,7 @@ public class Biblioteca2025 {
         System.out.println("\t --- LIBROS EN PLAZO --- ");
         for (Prestamo p : prestamos) {
             if (p.getFechaDev().isAfter(hoy)) {
-                System.out.println("Usuario:\t\t" + p.getUsuarioPrest().getDni() + " - " + p.getUsuarioPrest().getNombre() + " - " + p.getUsuarioPrest().getEmail() + " - " + p.getUsuarioPrest().getTelefono());
-                System.out.println("Libro:\t\t\t" + p.getLibroPrest().getIsbn() + " - " + p.getLibroPrest().getTitulo() + " - " + p.getLibroPrest().getAutor() + " - " + p.getLibroPrest().getGenero() + " - " + p.getLibroPrest().getEjemplares());
-                System.out.println("Fecha de prestamo:\t" + p.getFechaPrest());
-                System.out.println("Fecha de devolución:\t" + p.getFechaDev());
+                System.out.println(p);
                 System.out.println("El libro debe ser devuelto en " + (p.getFechaDev().getDayOfYear() - hoy.getDayOfYear()) + " dias.");
                 System.out.println();
             }
@@ -1105,9 +1094,7 @@ public class Biblioteca2025 {
         }
         Libro l = libros.get(libroPos);
         System.out.println();
-        System.out.println("Titulo:\t" + l.getTitulo());
-        System.out.println("Autor:\t" + l.getAutor());
-        System.out.println("Genero:\t" + l.getGenero());
+        System.out.println(l);
         System.out.println("¿Esta informacion es correcta y deseas realizar la prorroga? (Si/No)");
         if (sc.next().equalsIgnoreCase("Si")) {
             Prestamo p = prestamos.get(PrestamoPos);

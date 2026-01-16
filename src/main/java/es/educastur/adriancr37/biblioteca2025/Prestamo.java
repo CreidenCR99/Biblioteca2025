@@ -50,6 +50,16 @@ public class Prestamo {
 
     @Override
     public String toString() {
-        return "[libroPrest= " + libroPrest + "\tusuarioPrest= " + usuarioPrest + "\tfechaPrest= " + fechaPrest + "\tfechaDev= " + fechaDev + "]";
+        return "Libro:\t" + libroPrest.getIsbn() + " - " + libroPrest.getTitulo() + " - " + libroPrest.getAutor() + " - " + libroPrest.getGenero() + " - " + libroPrest.getEjemplares()
+        + "\n" + "Usuario:\t" + usuarioPrest.getNombre() + " - " + usuarioPrest.getDni() + " - " + usuarioPrest.getEmail() + " - " + usuarioPrest.getTelefono()
+        + "\n" + "Fecha de prestamo:\t" + fechaPrest
+        + "\n" + "Fecha de devolución:\t" + fechaDev;
+    }
+
+    public String toStringShort() {
+        return "Libro:\t" + libroPrest.getIsbn() + " - " + libroPrest.getTitulo()
+        + "\n" + "Usuario:\t" + usuarioPrest.getNombre() + " - " + usuarioPrest.getDni() + " - " + usuarioPrest.getEmail()
+        + "\n" + "Fecha de prestamo:\t" + fechaPrest
+        + "\n" + "Fecha de devolución:\t" + fechaDev;
     }
 }
